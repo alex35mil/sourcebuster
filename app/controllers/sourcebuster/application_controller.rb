@@ -1,5 +1,6 @@
 module Sourcebuster
   class ApplicationController < ActionController::Base
+	  layout 'application'
 
 	  include Sourcebuster::CookieSettersHelper
 	  before_filter :set_sourcebuster_data

@@ -1,0 +1,25 @@
+<h1>Busted!</h1>
+<h2>Первый визит</h2>
+<p>
+  Тип: <%= extract_sourcebuster_data(cookies[:sb_first])[:typ] %><br />
+  utm_source: <%= extract_sourcebuster_data(cookies[:sb_first])[:src] %><br />
+  utm_medium: <%= extract_sourcebuster_data(cookies[:sb_first])[:mdm] %><br />
+  utm_campaign: <%= extract_sourcebuster_data(cookies[:sb_first])[:cmp] %><br />
+  utm_content: <%= extract_sourcebuster_data(cookies[:sb_first])[:cnt] %><br />
+  utm_term: <%= extract_sourcebuster_data(cookies[:sb_first])[:trm] %>
+</p>
+
+<h2>Текущий визит</h2>
+<p>
+  Тип: <%= extract_sourcebuster_data(cookies[:sb_current])[:typ] %><br />
+  utm_source: <%= extract_sourcebuster_data(cookies[:sb_current])[:src] %><br />
+  utm_medium: <%= extract_sourcebuster_data(cookies[:sb_current])[:mdm] %><br />
+  utm_campaign: <%= extract_sourcebuster_data(cookies[:sb_current])[:cmp] %><br />
+  utm_content: <%= extract_sourcebuster_data(cookies[:sb_current])[:cnt] %><br />
+  utm_term: <%= extract_sourcebuster_data(cookies[:sb_current])[:trm] %>
+</p>
+
+<p>
+  Дата первого визита: <%= extract_sourcebuster_data(cookies[:sb_first_add])[:fd] %><br />
+  Точка входа: <%= extract_sourcebuster_data(cookies[:sb_first_add])[:ep] %>
+</p>

@@ -17,3 +17,8 @@ doc/
 .idea/workspace.xml
 .idea/tasks.xml
 test/dummy/config/database.yml
+
+Gemfile.lock
+.rvmrc
+.ruby-version
+.ruby-gemset

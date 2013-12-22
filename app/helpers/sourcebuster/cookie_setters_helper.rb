@@ -30,7 +30,7 @@ module Sourcebuster
 		SB_NONE = '(none)'
 
 		def set_sourcebuster_cookies
-			cookies[:sb_current] = get_main_sb_data if get_main_sb_data
+			cookies.permanent[:sb_current] = get_main_sb_data if get_main_sb_data
 			cookies.permanent[:sb_first_add] = "#{SB_FIRST_DATE}=#{Time.now}|#{SB_ENTRANCE_POINT}=#{request.original_url}" unless cookies[:sb_first]
 			cookies.permanent[:sb_first] = cookies[:sb_current] unless cookies[:sb_first]
 			cookies[:sb_session] = { value: "1", expires: 30.minutes.from_now }
@@ -46,8 +46,8 @@ module Sourcebuster
 			"#{SB_TERM_ALIAS}=#{sb_term}"
 		end
 
-		def clean_host(request_type)
-			URI(request_type).host.gsub('www.','')
+		def clean_host(request)
+			URI(request).host.gsub('www.','')
 		end
 
 		def get_main_sb_data

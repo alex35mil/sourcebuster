@@ -47,7 +47,7 @@ module Sourcebuster
 		end
 
 		def clean_host(request_type)
-			URI(request_type).host.gsub!('www.','')
+			URI(request_type).host.gsub('www.','')
 		end
 
 		def get_main_sb_data
@@ -67,7 +67,7 @@ module Sourcebuster
 		def check_referer(type)
 			if type == SB_ORGANIC
 				!request.referer.blank? &&
-				URI(request.referer).host != URI(request.original_url).host &&
+				clean_host(request.referer) != clean_host(request.original_url) &&
 				URI(request.referer).host &&
 				(URI(request.referer).query || URI(request.referer).fragment) &&
 				organic?(request.referer)
@@ -112,7 +112,7 @@ module Sourcebuster
 				@sb_source = check_social_referer_type(referer)
 				@sb_medium = SB_REFERER_SOCIAL
 			else
-				URI(referer).host
+				@sb_source = URI(referer).host
 			end
 		end
 

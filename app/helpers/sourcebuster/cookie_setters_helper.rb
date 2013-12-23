@@ -142,7 +142,7 @@ module Sourcebuster
 			when SB_ORGANIC
 
 				@sb_type = SB_ORGANIC
-				@sb_source = URI(request.referer).host.gsub!('www.','') unless @sb_source
+				@sb_source = URI(request.referer).host.gsub('www.','') unless @sb_source
 				@sb_medium = SB_REFERER_ORGANIC
 				@sb_campaign = SB_NONE
 				@sb_content = SB_NONE
@@ -151,7 +151,7 @@ module Sourcebuster
 			when SB_REFERRAL
 
 				@sb_type = SB_REFERRAL
-				@sb_source = URI(request.referer).host.gsub!('www.','') unless @sb_source
+				@sb_source = URI(request.referer).host.gsub('www.','') unless @sb_source
 				@sb_medium = SB_REFERER_REFERRAL unless @sb_medium
 				@sb_campaign = SB_NONE
 				@sb_content = SB_NONE

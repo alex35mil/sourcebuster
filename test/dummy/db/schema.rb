@@ -11,9 +11,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20131223200512) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "sourcebuster_referer_sources", force: true do |t|
+    t.string   "domain",              null: false
+    t.string   "source_alias"
+    t.integer  "referer_type_id",     null: false
+    t.string   "organic_query_param"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "sourcebuster_referer_sources", ["domain"], name: "index_sourcebuster_referer_sources_on_domain", using: :btree
+  add_index "sourcebuster_referer_sources", ["organic_query_param"], name: "index_sourcebuster_referer_sources_on_organic_query_param", using: :btree
+  add_index "sourcebuster_referer_sources", ["referer_type_id"], name: "index_sourcebuster_referer_sources_on_referer_type_id", using: :btree
+
+  create_table "sourcebuster_referer_types", force: true do |t|
+    t.string   "referer_type", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "sourcebuster_referer_types", ["referer_type"], name: "index_sourcebuster_referer_types_on_referer_type", unique: true, using: :btree
 
 end

@@ -86,9 +86,9 @@ module Sourcebuster
 			g_host = 'google'
 			g_param = 'q'
 
-			if !!URI(referer).host.match(/^.*\.?#{y_host}.{3,10}$/) && !!URI(referer).query.match(/.*#{y_param}=.*/)
+			if !!URI(referer).query && !!URI(referer).host.match(/^.*\.?#{y_host}.{3,10}$/) && !!URI(referer).query.match(/.*[?&]#{y_param}=.*/)
 				@sb_source = y_host
-			elsif !!URI(referer).host.match(/^.*\.?#{g_host}.{3,10}$/) && !!URI(referer).fragment.match(/.*#{g_param}=.*/)
+			elsif !!URI(referer).fragment && !!URI(referer).host.match(/^.*\.?#{g_host}.{3,10}$/) && !!URI(referer).fragment.match(/.*[#&]#{g_param}=.*/)
 				@sb_source = g_host
 			elsif get_add_organic_sources(referer)
 				@sb_source = get_add_organic_sources(referer)
@@ -102,7 +102,7 @@ module Sourcebuster
 			organic_array = Sourcebuster::RefererSource.where(referer_type_id: organic_type_id)
 
 			organic_array.each do |src|
-				return (src.source_alias || src.domain) if !!URI(referer).host.match(/^.*\.?#{src.domain}$/) && !!URI(referer).query.match(/.*#{src.organic_query_param}=.*/)
+				return (src.source_alias || src.domain) if !!URI(referer).host.match(/^.*\.?#{src.domain}$/) && !!URI(referer).query.match(/.*[?&]#{src.organic_query_param}=.*/)
 			end
 			false
 		end

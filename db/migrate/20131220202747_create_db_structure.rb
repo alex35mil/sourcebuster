@@ -49,8 +49,8 @@ class CreateDbStructure < ActiveRecord::Migration
 		Sourcebuster::RefererSource.create domain: "t.co",
 		                                   source_alias: "twitter",
 		                                   referer_type_id: 3
-		Sourcebuster::RefererSource.create domain: "plus.google.com",
-		                                   source_alias: "plus.google.com",
+		Sourcebuster::RefererSource.create domain: "plus.url.google.com",
+		                                   source_alias: "google_plus",
 		                                   referer_type_id: 3
 		Sourcebuster::RefererSource.create domain: "vk.com",
 		                                   source_alias: "vkontakte",

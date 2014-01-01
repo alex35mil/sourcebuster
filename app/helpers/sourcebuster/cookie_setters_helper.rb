@@ -178,9 +178,13 @@ module Sourcebuster
 
 			combine_sb_main_data_string(@sb_type, @sb_source, @sb_medium, @sb_campaign, @sb_content, @sb_term)
 
-			end
+		end
 
-		def extract_sourcebuster_data(cookie)
+
+		def extract_sourcebuster_data(cookie_type, data)
+
+			cookie = cookies[cookie_type]
+
 			if cookie
 				array = CGI::unescape(cookie).split('|')
 				data_hash = {}
@@ -189,7 +193,7 @@ module Sourcebuster
 					data_hash.merge!(param.split('=', 2)[0].to_sym => param.split('=', 2)[1])
 				end
 
-				data_hash
+				data_hash[data]
 			else
 				'(Houston, we have a problem)'
 			end

@@ -33,7 +33,7 @@ module Sourcebuster
 			cookies.permanent[:sb_current] = get_main_sb_data if get_main_sb_data
 			cookies.permanent[:sb_first_add] = "#{SB_FIRST_DATE}=#{Time.now}|#{SB_ENTRANCE_POINT}=#{request.original_url}" unless cookies[:sb_first]
 			cookies.permanent[:sb_first] = cookies[:sb_current] unless cookies[:sb_first]
-			cookies[:sb_session] = { value: "1", expires: 30.minutes.from_now }
+			cookies[:sb_session] = { value: '1', expires: 30.minutes.from_now }
 			cookies[:sb_udata] = "#{SB_USER_IP}=#{request.remote_ip}|#{SB_USER_AGENT}=#{request.user_agent}"
 		end
 
@@ -56,6 +56,7 @@ module Sourcebuster
 			elsif check_referer(SB_ORGANIC)
 				get_data(SB_ORGANIC)
 			elsif !cookies[:sb_session] && check_referer(SB_REFERRAL)
+				cookies[:sb_referer] = request.referer unless request.referer.blank?
 				get_data(SB_REFERRAL)
 			elsif !cookies[:sb_first] && !cookies[:sb_current]
 				get_data(SB_TYPEIN)
@@ -69,7 +70,6 @@ module Sourcebuster
 				!request.referer.blank? &&
 				clean_host(request.referer) != clean_host(request.original_url) &&
 				URI(request.referer).host &&
-				(URI(request.referer).query || URI(request.referer).fragment) &&
 				organic?(request.referer)
 			elsif type == SB_REFERRAL
 				!request.referer.blank? &&
@@ -84,7 +84,6 @@ module Sourcebuster
 			y_host = 'yandex'
 			y_param = 'text'
 			g_host = 'google'
-			g_param = 'q'
 
 			if !!URI(referer).query && !!URI(referer).host.match(/^.*\.?#{y_host}\..{2,9}$/) && !!URI(referer).query.match(/.*[?&]#{y_param}=.*/)
 				@sb_source = y_host
@@ -182,14 +181,19 @@ module Sourcebuster
 			end
 
 		def extract_sourcebuster_data(cookie)
-			array = CGI::unescape(cookie).split('|')
-			data_hash = {}
+			if cookie
+				array = CGI::unescape(cookie).split('|')
+				data_hash = {}
 
-			array.each do |param|
-				data_hash.merge!(param.split('=', 2)[0].to_sym => param.split('=', 2)[1])
+				array.each do |param|
+					data_hash.merge!(param.split('=', 2)[0].to_sym => param.split('=', 2)[1])
+				end
+
+				data_hash
+			else
+				'(Houston, we have a problem)'
 			end
 
-			data_hash
 		end
 
   end

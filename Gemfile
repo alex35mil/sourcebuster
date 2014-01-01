@@ -12,3 +12,4 @@ gemspec
 
 gem 'debugger'
 gem 'debugger-xml'
+gem "selenium-webdriver", "~> 2.39.0"

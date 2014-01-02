@@ -17,4 +17,8 @@
     <td>Organic query param:</td>
     <td><%= f.text_field :organic_query_param, placeholder: "Organic query param" %></td>
   </tr>
+  <tr>
+    <td></td>
+    <td><%= f.submit 'Save Custom Source' %> or <%= link_to "Cancel", sourcebuster.referer_sources_path %></td>
+  </tr>
 </table>

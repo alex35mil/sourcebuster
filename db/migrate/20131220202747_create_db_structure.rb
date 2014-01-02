@@ -10,8 +10,6 @@ class CreateDbStructure < ActiveRecord::Migration
 		Sourcebuster::RefererType.create referer_type: 'referral'
 		Sourcebuster::RefererType.create referer_type: 'organic'
 		Sourcebuster::RefererType.create referer_type: 'social'
-		Sourcebuster::RefererType.create referer_type: 'email'
-
 
 		create_table :sourcebuster_referer_sources do |t|
 			t.string :domain, null: false

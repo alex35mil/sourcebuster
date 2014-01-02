@@ -21,20 +21,30 @@ module Sourcebuster
 		SB_CONTENT_ALIAS = 'cnt'
 		SB_TERM_ALIAS = 'trm'
 
-		SB_FIRST_DATE = 'fd'
-		SB_ENTRANCE_POINT = 'ep'
+		SB_FIRST_DATE_ALIAS = 'fd'
+		SB_ENTRANCE_POINT_ALIAS = 'ep'
 
-		SB_USER_IP = 'uip'
-		SB_USER_AGENT = 'uag'
+		SB_REFERRAL_URL_ALIAS = 'ref'
+
+		SB_USER_IP_ALIAS = 'uip'
+		SB_USER_AGENT_ALIAS = 'uag'
 
 		SB_NONE = '(none)'
 
 		def set_sourcebuster_cookies
+
+			session_length = Sourcebuster::Setting.first.session_length || 30
+
 			cookies.permanent[:sb_current] = get_main_sb_data if get_main_sb_data
-			cookies.permanent[:sb_first_add] = "#{SB_FIRST_DATE}=#{Time.now}|#{SB_ENTRANCE_POINT}=#{request.original_url}" unless cookies[:sb_first]
+			cookies.permanent[:sb_first_add] = "#{SB_FIRST_DATE_ALIAS}=#{Time.now}|#{SB_ENTRANCE_POINT_ALIAS}=#{request.original_url}" unless cookies[:sb_first]
 			cookies.permanent[:sb_first] = cookies[:sb_current] unless cookies[:sb_first]
-			cookies[:sb_session] = { value: '1', expires: 30.minutes.from_now }
-			cookies[:sb_udata] = "#{SB_USER_IP}=#{request.remote_ip}|#{SB_USER_AGENT}=#{request.user_agent}"
+			cookies[:sb_session] = { value: '1', expires: session_length.minutes.from_now }
+			cookies[:sb_udata] = "#{SB_USER_IP_ALIAS}=#{request.remote_ip}|#{SB_USER_AGENT_ALIAS}=#{request.user_agent}"
+
+		end
+
+		def set_referer_cookie(referer)
+			cookies[:sb_referer] = "#{SB_REFERRAL_URL_ALIAS}=#{referer}" unless referer.blank?
 		end
 
 		def combine_sb_main_data_string(sb_type, sb_source, sb_medium, sb_campaign, sb_content, sb_term)
@@ -50,13 +60,24 @@ module Sourcebuster
 			URI(request).host.gsub('www.','')
 		end
 
+		def check_referer_with_subdomains(referer)
+			host = Sourcebuster::Setting.first.main_host
+			if Sourcebuster::Setting.first.use_subdomains
+				!(!!clean_host(referer).match(/^.*#{host}$/i))
+			else
+				clean_host(referer) != clean_host(request.original_url)
+			end
+		end
+
 		def get_main_sb_data
 			if params[:utm_source] || params[:utm_medium] || params[:utm_campaign] || params[:utm_content] || params[:utm_term]
+				set_referer_cookie(request.referer)
 				get_data(SB_UTM)
 			elsif check_referer(SB_ORGANIC)
+				set_referer_cookie(request.referer)
 				get_data(SB_ORGANIC)
 			elsif !cookies[:sb_session] && check_referer(SB_REFERRAL)
-				cookies[:sb_referer] = request.referer unless request.referer.blank?
+				set_referer_cookie(request.referer)
 				get_data(SB_REFERRAL)
 			elsif !cookies[:sb_first] && !cookies[:sb_current]
 				get_data(SB_TYPEIN)
@@ -68,12 +89,12 @@ module Sourcebuster
 		def check_referer(type)
 			if type == SB_ORGANIC
 				!request.referer.blank? &&
-				clean_host(request.referer) != clean_host(request.original_url) &&
+				check_referer_with_subdomains(request.referer) &&
 				URI(request.referer).host &&
 				organic?(request.referer)
 			elsif type == SB_REFERRAL
 				!request.referer.blank? &&
-				clean_host(request.referer) != clean_host(request.original_url) &&
+				check_referer_with_subdomains(request.referer) &&
 				social_or_another?(request.referer)
 			else
 				false

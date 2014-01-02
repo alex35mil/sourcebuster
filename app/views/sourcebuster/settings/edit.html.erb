@@ -1,0 +1,21 @@
+<h1>Edit Settings</h1>
+<%= form_for @settings do |f| %>
+  <table>
+    <tr>
+      <td>Session length:</td>
+      <td><%= f.text_field :session_length %> minutes</td>
+    </tr>
+    <tr>
+      <td>Subdomains:</td>
+      <td><%= f.check_box :use_subdomains, {}, "true", "false" %><%= f.label :use_subdomains, ' I have subdomains and traffic between them should not be a referral' %></td>
+    </tr>
+    <tr>
+      <td>Main host:</td>
+      <td><%= f.text_field :main_host, placeholder: 'my-domain.com' %></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><%= f.submit 'Save settings' %> or <%= link_to "Cancel", sourcebuster.settings_path %></td>
+    </tr>
+  </table>
+<% end %>

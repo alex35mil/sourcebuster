@@ -11,8 +11,6 @@ class CreateDbStructure < ActiveRecord::Migration
 		Sourcebuster::RefererType.create referer_type: 'referral'
 		Sourcebuster::RefererType.create referer_type: 'organic'
 		Sourcebuster::RefererType.create referer_type: 'social'
-		Sourcebuster::RefererType.create referer_type: 'email'
-
 
 		create_table :sourcebuster_referer_sources do |t|
 			t.string :domain, null: false
@@ -50,8 +48,8 @@ class CreateDbStructure < ActiveRecord::Migration
 		Sourcebuster::RefererSource.create domain: "t.co",
 		                                   source_alias: "twitter",
 		                                   referer_type_id: 3
-		Sourcebuster::RefererSource.create domain: "plus.google.com",
-		                                   source_alias: "plus.google.com",
+		Sourcebuster::RefererSource.create domain: "plus.url.google.com",
+		                                   source_alias: "google_plus",
 		                                   referer_type_id: 3
 		Sourcebuster::RefererSource.create domain: "vk.com",
 		                                   source_alias: "vkontakte",

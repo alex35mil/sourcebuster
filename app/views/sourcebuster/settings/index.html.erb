@@ -1,0 +1,19 @@
+<h1>Settings</h1>
+<table>
+  <tr>
+    <td>Session length:</td>
+    <td><%= @settings.session_length || '30' %> minutes</td>
+  </tr>
+  <tr>
+    <td>Subdomains:</td>
+    <td><%= @settings.use_subdomains ? "I have subdomains and traffic between them <strong>is not a referral</strong>".html_safe : "I <strong>don't have subdomains</strong> or traffic between them <strong>should be referral</strong>".html_safe %></td>
+  </tr>
+  <tr>
+    <td>Main host:</td>
+    <td><%= @settings.main_host ? @settings.main_host : "—" %></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td><%= link_to "Edit", sourcebuster.edit_settings_path %></td>
+  </tr>
+</table>

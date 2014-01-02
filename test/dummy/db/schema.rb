@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131223200512) do
+ActiveRecord::Schema.define(version: 20140102151213) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,5 +36,13 @@ ActiveRecord::Schema.define(version: 20131223200512) do
   end
 
   add_index "sourcebuster_referer_types", ["referer_type"], name: "index_sourcebuster_referer_types_on_referer_type", unique: true, using: :btree
+
+  create_table "sourcebuster_settings", force: true do |t|
+    t.integer  "session_length"
+    t.boolean  "use_subdomains", default: false
+    t.string   "main_host"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end

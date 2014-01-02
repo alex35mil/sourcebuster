@@ -37,8 +37,6 @@ class NavigationTest < ActionDispatch::IntegrationTest
   TEST_REFERRAL_MEDIUM = 'referral'
 
 
-
-
   # That's ok, we'll take care of the rest
 
   # yandex and google

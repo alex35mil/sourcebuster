@@ -18,6 +18,6 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", "~> 4.0.2"
   s.add_dependency "jquery-rails"
-
+  s.add_development_dependency "selenium-webdriver", "~> 2.39.0"
   s.add_development_dependency "pg"
 end

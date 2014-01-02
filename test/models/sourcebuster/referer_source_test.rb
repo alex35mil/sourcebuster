@@ -21,21 +21,28 @@ module Sourcebuster
 		  assert r_s_2.errors[:domain].any?
 	  end
 
-	  test "referer source domain should not have www" do
-		  r_s_domain = 'www.Google.com'
-		  r_s = Sourcebuster::RefererSource.new(domain: r_s_domain,
-		                                        referer_type_id: 1)
-		  assert r_s.save
-		  assert r_s[:domain] == r_s_domain.gsub('www.', '').downcase
-		  assert r_s[:domain] == 'google.com'
+	  test "referer source domain should not have www and http stuff" do
+		  r_s_domain_1 = 'http://www.Google-ht.com'
+		  r_s_1 = Sourcebuster::RefererSource.new(domain: r_s_domain_1,
+		                                          referer_type_id: 1)
+		  r_s_domain_2 = 'https://www.http-Domain.com'
+		  r_s_2 = Sourcebuster::RefererSource.new(domain: r_s_domain_2,
+		                                          referer_type_id: 1)
+		  assert r_s_1.save
+		  assert r_s_1[:domain] == 'google-ht.com'
+		  assert r_s_2.save
+		  assert r_s_2[:domain] == 'http-domain.com'
 	  end
 
-	  test "referer source organic_query_param should not be empty if referer_type is organic" do
-		  r_s_type_id = Sourcebuster::RefererType.find_by(referer_type: 'organic')
-		  r_s = Sourcebuster::RefererSource.new(domain: 'google.com',
-		                                        referer_type_id: r_s_type_id)
-		  r_s.valid?
-		  assert r_s.errors[:organic_query_param].any?
+	  test "referer source organic query param should not have equal sign" do
+		  r_s_domain = 'google77.com'
+		  r_s_oqp = 'q='
+		  r_s = Sourcebuster::RefererSource.new(domain: r_s_domain,
+		                                        referer_type_id: 2,
+		                                        organic_query_param: r_s_oqp)
+		  assert r_s.save
+		  assert r_s[:organic_query_param] == r_s_oqp.gsub('=', '').downcase
+		  assert r_s[:organic_query_param] == 'q'
 	  end
 
   end

@@ -1,0 +1,25 @@
+<h1>Custom Sources</h1>
+
+<table>
+  <tr>
+    <td><strong>Domain</strong></td>
+    <td><strong>Alias</strong></td>
+    <td><strong>Referral type</strong></td>
+    <td><strong>Search query param</strong></td>
+    <td></td>
+  </tr>
+  <% @referer_sources.each do |rs| %>
+    <tr>
+      <td><%= rs.domain %></td>
+      <td><%= rs.source_alias %></td>
+      <td><%= rs.referer_type.referer_type %></td>
+      <td><%= rs.organic_query_param %></td>
+      <td>
+        <%= link_to "Edit", sourcebuster.edit_referer_source_path(rs) %>
+        &nbsp;&nbsp;
+        <%= link_to "Delete", sourcebuster.referer_source_path(rs), method: :delete, data: { confirm: "Sure?" } %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+<p><%= link_to "Add custom source", sourcebuster.new_referer_source_path %></p>

@@ -111,7 +111,7 @@ module Sourcebuster
 				@sb_source = check_social_referer_type(referer)
 				@sb_medium = SB_REFERER_SOCIAL
 			else
-				@sb_source = URI(referer).host
+				@sb_source = clean_host(referer)
 			end
 		end
 

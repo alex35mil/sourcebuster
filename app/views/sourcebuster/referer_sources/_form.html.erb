@@ -1,0 +1,6 @@
+<%= render partial: 'sourcebuster/shared/error_messages', locals: { object: f.object } %>
+
+<%= f.text_field :domain, placeholder: "domain.com" %><br />
+<%= f.text_field :source_alias, placeholder: "Source alias" %><br />
+<%= f.select :referer_type_id, Sourcebuster::RefererType.all.map { |rt| [rt.referer_type, rt.id] } %><br />
+<%= f.text_field :organic_query_param, placeholder: "Search query param" %><br />

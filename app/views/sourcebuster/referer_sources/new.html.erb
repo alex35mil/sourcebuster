@@ -1,0 +1,5 @@
+<h1>Add Custom Source</h1>
+<%= form_for @referer_source do |f| %>
+  <%= render 'sourcebuster/referer_sources/form', f: f %>
+  <%= f.submit 'Add Custom Source' %>
+<% end %>

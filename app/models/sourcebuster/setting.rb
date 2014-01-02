@@ -6,7 +6,7 @@ module Sourcebuster
 	  # check at least one dot in the middle
 	  VALID_HOST_REGEX = /\A.+\..+\z/i
 	  validates_presence_of :main_host, :if => lambda { self.use_subdomains }
-		validates :main_host, format: { with: VALID_HOST_REGEX }
+		validates :main_host, format: { with: VALID_HOST_REGEX }, allow_blank: true
 
   end
 end

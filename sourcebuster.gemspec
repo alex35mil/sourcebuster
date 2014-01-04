@@ -12,6 +12,8 @@ Gem::Specification.new do |s|
   s.homepage    = "http://www.alexfedoseev.com"
   s.summary     = "Sourcebuster tracks sources of your visitors"
   s.description = "It stores information about visitor's sources, handles sources overriding just like Google Analytics do and lets you store this info for further analysis."
+  s.date        = Time.now.strftime('%Y-%m-%d')
+  s.license     = "MIT"
 
   s.files            = `git ls-files`.split("\n")
   s.test_files       = `git ls-files -- {test,spec,features}/*`.split("\n")

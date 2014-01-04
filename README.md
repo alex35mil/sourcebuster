@@ -47,6 +47,65 @@ class ApplicationController < ActionController::Base
 end
 ```
 
+## Usage
+
+Use following method params to get sourcebuster data:
+
+```ruby
+# First source type (utm / organic / referral / typein)
+extract_sourcebuster_data(:sb_first, :typ)
+
+# First utm_source
+extract_sourcebuster_data(:sb_first, :src)
+
+# First utm_medium
+extract_sourcebuster_data(:sb_first, :mdm)
+
+# First utm_campaign
+extract_sourcebuster_data(:sb_first, :cmp)
+
+# First utm_content
+extract_sourcebuster_data(:sb_first, :cnt)
+
+# First utm_term
+extract_sourcebuster_data(:sb_first, :trm)
+
+
+# Current source type (utm / organic / referral / typein)
+extract_sourcebuster_data(:sb_current, :typ)
+
+# Current utm_source
+extract_sourcebuster_data(:sb_current, :src)
+
+# Current utm_medium
+extract_sourcebuster_data(:sb_current, :mdm)
+
+# Current utm_campaign
+extract_sourcebuster_data(:sb_current, :cmp)
+
+# Current utm_content
+extract_sourcebuster_data(:sb_current, :cnt)
+
+# Current utm_term
+extract_sourcebuster_data(:sb_current, :trm)
+
+
+# Date of first visit
+extract_sourcebuster_data(:sb_first_add, :fd)
+
+# Entrance point
+extract_sourcebuster_data(:sb_first_add, :ep)
+
+# Full referer (when source override occur)
+extract_sourcebuster_data(:sb_referer, :ref)
+
+# user ip
+extract_sourcebuster_data(:sb_udata, :uip)
+
+# user agent
+extract_sourcebuster_data(:sb_udata, :uag)
+```
+
 ## Note on Patches/Pull Requests
 
 * Fork [the project](https://github.com/alexfedoseev/sourcebuster).

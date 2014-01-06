@@ -45,5 +45,13 @@ module Sourcebuster
 		  assert r_s[:organic_query_param] == 'q'
 	  end
 
+	  test "referer source organic_query_param should not be empty if referer_type is organic" do
+		  r_s_type_id = Sourcebuster::RefererType.find_by(referer_type: 'organic')
+		  r_s = Sourcebuster::RefererSource.new(domain: 'google.com',
+		                                        referer_type_id: r_s_type_id)
+		  r_s.valid?
+		  assert r_s.errors[:organic_query_param].any?
+	  end
+
   end
 end

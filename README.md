@@ -1,3 +1,5 @@
+# Sorry, this project is unmaintained. Check out [sourcebuster-js](https://github.com/alexfedoseev/sourcebuster-js) instead
+
 # Sourcebuster
 
 # Description
